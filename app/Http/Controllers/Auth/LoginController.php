@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/participants/all';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -40,7 +40,7 @@ class LoginController extends Controller
     }
 
 
-    public function user_login(Request $request)
+    public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
@@ -68,7 +68,7 @@ class LoginController extends Controller
     }
 
 
-    public function user_logout(Request $request)
+    public function logout(Request $request)
     {
         $user = \Auth::guard('api')->user();
 
@@ -80,11 +80,5 @@ class LoginController extends Controller
         return response()->json(['data' => 'User logged out.'], 200);
     }
 
-    public function logout(Request $request)
-    {
-        \Auth::logout();
-
-        return redirect('login');
-    }
 
 }

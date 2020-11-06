@@ -20,6 +20,7 @@ class CreateFootprintsTable extends Migration
             $table->enum('country', ['usa', 'gbr', 'def'])->nullable(false);
             $table->enum('fuelType', ['motorGasoline', 'diesel', 'aviationGasoline', 'jetFuel'])->nullable(true);
             $table->enum('mode', ['dieselCar', 'petrolCar', 'anyCar', 'taxi', 'economyFlight', 'businessFlight', 'firstclassFlight', 'anyFlight', 'motorbike', 'bus', 'transitRail'])->nullable(true);
+            $table->string('response');
             $table->timestamps();
         });
     }
