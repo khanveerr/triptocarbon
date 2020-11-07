@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\FootprintController;
 
 class TripToCarbonController extends Controller
 {
@@ -84,6 +85,7 @@ class TripToCarbonController extends Controller
         if (Cache::has($key_array)){
 
             $json_response = Cache::get($key_array);
+            $decode_response = json_decode($json_response);
 
         } else {
 
@@ -94,18 +96,27 @@ class TripToCarbonController extends Controller
                 $response = $client->request('GET', 'https://api.triptocarbon.xyz/v1/footprint', $params);
                 $json_response = $response->getBody()->getContents();
 
-                // Cache::put($key_array, $json_response, 24*60);
+                // Save response in Cache
+                Cache::put($key_array, $json_response, 24*60);
 
                 $decode_response = json_decode($json_response);
-
+                
+                $data['response'] = $decode_response->carbonFootprint;
+                
+                // Save request and response in database
+                $db_response = (new FootprintController)->save($data);
+                if($db_response['status'] == 'failure') {
+                    return response()->json(['status' => 'failure', 'errors' => $db_response['errors'], 'message' => 'Error saving data'], 400);
+                }
 
             } catch (ClientException $e) {
+                // Throws an error if there will be any external API error
                 $response = $e->getResponse();
                 $json_response = json_decode($response->getBody()->getContents());
                 return response()->json(['status' => 'failure', 'errors' => $json_response->invalidParameters, 'message' => 'Error fetching API'], 400);
             }
         }
         
-        return response()->json($decode_response->carbonFootprint);
+        return response()->json($decode_response);
     }
 }
