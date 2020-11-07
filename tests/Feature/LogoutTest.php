@@ -9,6 +9,13 @@ use App\User;
 
 class LogoutTest extends TestCase
 {
+
+
+    /**
+     * This test check if user logout and try to access api and throws error because token is missing
+     * 
+     * @return void
+     */
     public function testUserWithNullToken()
     {
         // Simulating login

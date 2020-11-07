@@ -11,7 +11,7 @@ use App\Participant;
 class TripToCarbonPostTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * This test is to successfully call triptocarbon api without any error
      *
      * @return void
      */
@@ -35,7 +35,11 @@ class TripToCarbonPostTest extends TestCase
             ]);;
     }
 
-
+    /**
+     * This test is used to check if required data is missing
+     * 
+     * @return void
+     */
     public function testsAllRequireData()
     {
         $user = factory(User::class)->create(['email' => 'user@test.com']);
@@ -59,7 +63,11 @@ class TripToCarbonPostTest extends TestCase
             ]);
     }
 
-
+    /**
+     * This test check for invalid activity type
+     * 
+     * @return void
+     */
     public function testsInvalidActivityType()
     {
         $payload = [
@@ -84,6 +92,11 @@ class TripToCarbonPostTest extends TestCase
             ]);
     }
 
+    /**
+     * This test check for invalid country
+     * 
+     * @return void
+     */
     public function testsInvalidCountry()
     {
         $payload = [
@@ -109,6 +122,11 @@ class TripToCarbonPostTest extends TestCase
     }
 
 
+    /**
+     * This test check for invalid fuel type
+     * 
+     * @return void
+     */
     public function testsInvalidFuelType()
     {
         $payload = [
@@ -133,6 +151,11 @@ class TripToCarbonPostTest extends TestCase
             ]);
     }
 
+    /**
+     * This test check for mode is not present if activity type is miles
+     * 
+     * @return void
+     */
     public function testsMilesActivityTypeModeRequired()
     {
         $payload = [
@@ -156,6 +179,11 @@ class TripToCarbonPostTest extends TestCase
             ]);
     }
 
+    /**
+     * This test check for fuel type is not present if activity type is fuel
+     * 
+     * @return void
+     */
     public function testsFuelActivityTypeFuelTypeRequired()
     {
         $payload = [

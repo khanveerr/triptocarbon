@@ -9,6 +9,11 @@ use App\User;
 
 class LoginTest extends TestCase
 {
+    /**
+     * This test check for required request parameter for login
+     * 
+     * @return void
+     */
     public function testRequiresEmailAndLogin()
     {
         $this->json('POST', 'api/login')
@@ -25,7 +30,11 @@ class LoginTest extends TestCase
             ]);
     }
 
-
+    /**
+     * This test checks for successfull login
+     * 
+     * @return void
+     */
     public function testUserLoginsSuccessfully()
     {
         $user = factory(User::class)->create([
