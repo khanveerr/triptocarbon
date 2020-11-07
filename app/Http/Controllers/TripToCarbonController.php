@@ -44,14 +44,14 @@ class TripToCarbonController extends Controller
         if($data['activityType'] == "fuel" && !isset($data['fuelType'])) {
             return response()->json([
                 'status' => 'failure',
-                'errors' => ['fuelType' => ['Fuel Type is required']]
+                'errors' => ['fuelType' => ['For fuel activity type, fuel type is required']]
             ], 400);
         }
 
         if($data['activityType'] == "miles" && !isset($data['mode'])) {
             return response()->json([
                 'status' => 'failure',
-                'errors' => ['mode' => ['Mode is required']]
+                'errors' => ['mode' => ['For miles activity type, mode is required']]
             ], 400);
         }
 
